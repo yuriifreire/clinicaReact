@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 
+
 class BuscarPaciente extends Component {
 
     constructor(props) {
@@ -14,49 +15,42 @@ class BuscarPaciente extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3000/paciente`)
-            .then(res => res.json())
-            .then((data) => { 
-                this.setState({ pacientes: data})
+        axios.get(`http://localhost:4000/paciente`)
+            .then(res =>
+                res.json())
+            .then((data) => {
+                this.setState({ pacientes: data })
             })
+
     }
 
     insereFormulario = (event) => {
         let { name, value } = event.target;
-        this.setState({ [name]: value})
+        this.setState({ [name]: value })
     };
 
     buscarPaciente = (event) => {
         event.preventDefault();
-        axios.get("http://localhost:3000/paciente" + this.state.nome)
+        axios.get("http://localhost:4000/paciente/" + this.state.nome)
             .then(data => {
-                console.log("Paciente encontrado: ", data);
+                console.log("Paciente encontrado com sucesso", data);
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
-    excluirPaciente = (event) => {
-        event.preventDefault();
-        axios.delete("http://localhost:3000/paciente" + this.state.id)
-            .then(data => {
-                console.log("Paciente excluid: ", data)
-            })
-    }
-
     render(){
-        return(
+        return (
             <div>
                 <Form>
                     <Form.Row>
-                        <Form.Group controlId="formGridNOME">
-                            <Form.Label>Digite o NOME para buscar o paciente</Form.Label>
-                            <Form.Control type="text" name="nome" value={this.state.nome} onChange={this.insereFormulario} placeholder="Nome" />
+                        <Form.Group controlId="formGridNome">
+                            <Form.Label>Digite o nome para buscar o paciente</Form.Label>
+                            <Form.Control type="text" name="nome" value={this.state.nome} onChange={this.insereFormulario} placeholder="Informe o nome" />
                         </Form.Group>
                     </Form.Row>
-
-                    <Button onClick={this.buscarPaciente} variant="primary" type="submit">Buscar Paciente</Button>
+                    <Button onClick={this.buscarLivro} variant="info" type="submit">Buscar</Button>
                 </Form>
 
                 <Table table-dark>
@@ -80,5 +74,4 @@ class BuscarPaciente extends Component {
         )
     };
 }
-
 export default BuscarPaciente;

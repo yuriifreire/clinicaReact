@@ -2,23 +2,26 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 
-class TabelaMedico extends Component{
+class TabelaPacientes extends Component {
+
     constructor(props) {
         super(props);
-        this.state = this.medico
+        this.pacientes = {"nome":" "}
+        this.state = this.pacientes
         this.state = {
-            medico: []
+            pacientes: []
         }
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:4000/medicos`)
+        axios.get(`http://localhost:4000/pacientes`)
             .then(res => {
-                const medico = res.data;
+                const pacientes = res.data;
                 console.log(res.data);
-                this.setState({ medico })
+                this.setState({ pacientes })
             })
     }
+
 
     render() {
 
@@ -27,16 +30,16 @@ class TabelaMedico extends Component{
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Especialidade</th>
-                        <th>CRM</th>
+                        <th>Idade</th>
+                        <th>Sexo</th>
                     </tr>
                 </thead>
                 <tbody>
-                {this.state.medico.map(medico =>
+                {this.state.pacientes.map(pacientes =>
                     <tr>
-                            <td>{medico.nome}</td>
-                            <td>{medico.espec}</td>
-                            <td>{medico.crm}</td>
+                            <td>{pacientes.nome}</td>
+                            <td>{pacientes.idade}</td>
+                            <td>{pacientes.sexo}</td>
                     </tr>)}
                 </tbody>
             </Table>
@@ -44,4 +47,4 @@ class TabelaMedico extends Component{
     }
 }
 
-export default TabelaMedico;
+export default TabelaPacientes;
